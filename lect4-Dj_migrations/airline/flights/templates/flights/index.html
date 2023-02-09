@@ -5,7 +5,10 @@
 	<ul>
 		{% for i in flights %}
 			<li>
-				Flight {{ i.id }}: from {{ i.origin }} to {{ i.destination }}
+				<!-- Give a flight_id parametr to the views.py function called "flight" -->
+				<a href="{% url 'flight' i.id %}">
+					Flight {{ i.id }}: from {{ i.origin }} to {{ i.destination }}
+				</a>
 			</li>
 		{% endfor %}
 	</ul>

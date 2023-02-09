@@ -12,11 +12,14 @@ def index(request):
 
 def flight(request, flight_id):
 	""" Shows info about a flight """
+	# Need an error check for invalid flight_id
 
 	# Get the flight, "pk" here is for "Primary Key" of the table, for id precisely
 	flight = Flight.objects.get(pk=flight_id)
 
 	# Render a template with this flight
 	return render(request, "flights/flight.html", {
-		"flight": flight
+		"flight": flight,
+		# A "flight" doesn't have a "passengers" list inside, but due to "related_name" in models "Passenger" we can get access to this list
+		"passengers": flight.passengers.all()
 	})
