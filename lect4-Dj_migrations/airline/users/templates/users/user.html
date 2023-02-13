@@ -1,0 +1,13 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+<!-- inside the tempalate we have an access to the "request" object -->
+	<h1>Welcome, {{ request.user.first_name }}</h1>
+
+	<ul>
+		<li>Username: {{ request.user.username }}</li>
+	</ul>
+
+	<a href="{% url 'logout' %}">Log out</a>
+{% endblock %}
