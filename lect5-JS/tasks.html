@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tasks</title>
+	<style>
+		body {
+			font-size: 20px;
+		}
+		form {
+			padding: 1.5em;
+		}
+		input {
+			font-size: 1em;
+			padding: 0.5em;
+			border-radius: 10px;
+			border: 1px solid #aaaaaa;
+		}
+	</style>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Create a task list
+
+			// Prevent user from empty input
+			// Input field is disabled by default
+			document.querySelector('#submit').disabled = true;
+
+			// Enable submit button if there is an input value
+			document.querySelector('#task').onkeyup = () => {
+				if (document.querySelector('#task').value.length > 0) {
+					document.querySelector('#submit').disabled = false;
+				} else {
+					document.querySelector('#submit').disabled = true;
+				}
+			};
+
+			document.querySelector('form').onsubmit = () => {
+				// Get input from the form
+				const task = document.querySelector('#task').value;
+				
+				// Create a new list item element
+				const li = document.createElement('li');
+				// Give it content from the input
+				li.innerHTML = task;
+
+				// Add the new list item to the list #tasks
+				document.querySelector('#tasks').append(li);
+
+				// Clear the input field of the form
+				document.querySelector('#task').value = '';
+
+				// Disable submit to prevent empty task
+				document.querySelector('#submit').disabled = true;
+				
+
+				// Prevent form's submitting
+				return false;
+			}
+		});
+	</script>
+</head>
+<body>
+	<h1>Tasks</h1>
+	<ul id="tasks"></ul>
+	<form action="#">
+		<input id="task" placeholder="New Task" type="text">
+		<input id="submit" type="submit" value="Create">
+	</form>
+</body>
+</html>

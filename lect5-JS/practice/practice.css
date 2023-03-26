@@ -1,0 +1,27 @@
+h1 {
+	text-align: center;
+	font-size: 3rem;
+}
+
+.timer {
+	font-size: 1.5rem;
+	position: absolute;
+	font-family: sans-serif;
+}
+
+.buttons {
+	font-size: 1.5rem;
+	text-align: center;
+	padding: 1rem;
+}
+
+button, input, select {
+	font-size: 1.5rem;
+	padding: 1rem;
+	width: 10%;
+}
+
+span {
+	position: absolute;
+	padding: 1rem;
+}
