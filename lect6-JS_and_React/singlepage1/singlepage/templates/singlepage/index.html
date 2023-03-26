@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Welcome</title>
+	<script>
+
+		// History of visited sections
+		window.onpopstate = function(event) {
+			console.log(event.state.section);
+			showSection(event.state.section);
+		}
+
+		// Shows the requestet section
+		function showSection(section) {
+			// Send a request
+			fetch(`/sections/${section}`)			
+			// Parse the response
+			.then(response => response.text())
+			// Show the needed section
+			.then(i => {
+				document.querySelector('#content').innerHTML = i;
+			});
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			// Get all the buttons
+			document.querySelectorAll('button').forEach(button => {
+				// Set an event listener for each button
+				button.onclick = function() {
+					// Get the needed section
+					const section = this.dataset.section;
+					// Construct the URL history
+					history.pushState({section: section}, '', ``);
+					// Show requested section in #content via dataset attributes
+					showSection(this.dataset.section);
+				}
+			});
+		});
+
+	</script>
+</head>
+<body>
+	<h1>Hello!</h1>
+	<div>
+		<button data-section="1">Section 1</button>
+		<button data-section="2">Section 2</button>
+		<button data-section="3">Section 3</button>
+	</div>
+	<div id="content"></div>
+</body>
+</html>
