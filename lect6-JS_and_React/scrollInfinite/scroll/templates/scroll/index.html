@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Scroll</title>
+	<style>
+		.post {
+			padding: 1.5em;
+			margin: 5px;
+			background-color: #12345f;
+			color: beige;
+		}
+	</style>
+	<script>
+		
+		// Create counter (start)
+		let counter = 1;
+		// Set quantity of loading posts
+		let quantity = 20;
+
+		// On Loaded => load the first posts
+		document.addEventListener('DOMContentLoaded', load);
+
+		// Add a listener on window onscroll => when bottom reached - run load() and load next posts
+		window.onscroll = () => {
+			if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+				setTimeout(load(), 3000);
+			}
+		};
+
+		// Function for loading posts
+		function load() {
+			// Set start and end, update counter
+			const start = counter;
+			const end = start + quantity - 1;
+			counter = start + quantity;
+
+			// Make request to the server with start/end
+			// For URL look into urls.py name, recall that GET request made via template query?key=value&key=value
+			fetch(`posts?start=${start}&end=${end}`)
+			// Parse JSON response
+			.then(response => response.json())
+			// For each in "posts" make a div.post (add_post)
+			.then(data => {
+				data.posts.forEach(add_post);
+			})
+		}
+
+		// Function add_post
+		function add_post(post) {
+			// Create new div element
+			const div = document.createElement('div');
+			// Add class name to it
+			div.className = 'post';
+			// Populate with data
+			div.innerHTML = post;
+			// Add element to the DOM
+			document.querySelector('.content').append(div);
+		}
+			
+	</script>
+</head>
+<body>
+	<div class="content"></div>
+</body>
+</html>
