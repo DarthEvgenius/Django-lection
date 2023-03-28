@@ -6,11 +6,48 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Scroll</title>
 	<style>
+		@keyframes hide {
+			0% {
+				opacity: 1;
+				height: 100%;
+				line-height: 100%;
+				padding: 1.5em 3em;
+				margin: 5px;
+			}
+
+			70% {
+				opacity: 0;
+				height: 100%;
+				line-height: 100%;
+				padding: 1.5em 3em;
+				margin: 5px;
+			}
+
+			/* And now shrink the element */
+			100% {
+				opacity: 0;
+				height: 0px;
+				line-height: 0px;
+				padding: 0px;
+				margin: 0px;
+			}
+		}
+		
 		.post {
-			padding: 1.5em;
+			padding: 1.5em 3em;
 			margin: 5px;
 			background-color: #12345f;
 			color: beige;
+			/* Animation for hide */
+			animation-name: hide;
+			animation-duration: 2s;
+			animation-fill-mode: forwards;
+			/* Initially the animation is paused */
+			animation-play-state: paused;
+		}
+
+		.hide {
+			float: right;
 		}
 	</style>
 	<script>
@@ -23,10 +60,25 @@
 		// On Loaded => load the first posts
 		document.addEventListener('DOMContentLoaded', load);
 
+		// Hide an element
+		document.addEventListener('click', event => {
+			// Get the element that triggered an event
+			const element = event.target;
+			// Check if the element is a hide-button
+			if (element.className === 'hide') {
+				// Hide the parent of the button via animation
+				element.parentElement.style.animationPlayState = 'running';
+				// And remove if from the page after the animation ended
+				element.parentElement.addEventListener('animationend', () => {
+					element.parentElement.remove();
+				});
+			}
+		});
+
 		// Add a listener on window onscroll => when bottom reached - run load() and load next posts
 		window.onscroll = () => {
 			if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-				setTimeout(load(), 3000);
+				load();
 			}
 		};
 
@@ -55,7 +107,7 @@
 			// Add class name to it
 			div.className = 'post';
 			// Populate with data
-			div.innerHTML = post;
+			div.innerHTML = `${post} <button class="hide">Hide</button>`;
 			// Add element to the DOM
 			document.querySelector('.content').append(div);
 		}
