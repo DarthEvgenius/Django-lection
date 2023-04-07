@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- CDN Links to React and babel -->
+	<!-- REACT LIBRARY -->
+    <script src="https://unpkg.com/react@15.5.4/dist/react.js"></script>
+    <!-- REACT DOM LIBRARY -->
+    <script src="https://unpkg.com/react-dom@15.5.4/dist/react-dom.js"></script>
+    <!-- BABEL LIBRARY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+	<title>React</title>
+</head>
+<body>
+	<div id="app"></div>
+
+	<!-- Type defines that inside there will be a React syntax JSX -->
+	<script type="text/babel">
+		const x = 1;
+		const y = 2;
+
+		// Function names capitalize!
+		function Bla(props) {
+			return (
+				<h4>Bla, {props.name}</h4>
+			);
+		}
+
+		function App() {
+			return (
+				<div>
+					<p>Hello, world!</p>
+					<div>{ x + y }</div>
+					<Bla name="Harry" />
+					<Bla name="Ron" />
+					<Bla name="Hermione" />
+				</div>
+				
+			);
+		}
+
+		// Now define What to render and Where to render it
+		ReactDOM.render(<App />, document.querySelector('#app'));
+	</script>
+</body>
+</html>

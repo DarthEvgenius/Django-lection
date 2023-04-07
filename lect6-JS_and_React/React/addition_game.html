@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+	<!-- Here used up-to-date CDN Links from W3Schools React installation docs https://react.dev/learn/installation -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	<style>
+		#root {
+			text-align: center;
+			font-family: sans-serif;
+		}
+
+		#problem {
+			font-size: 72px;
+		}
+
+		.incorrect {
+			color: red;
+		}
+
+		#winner {
+			font-size: 72px;
+			color: green;
+		}
+	</style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+    
+      function MyApp() {
+
+		const [state, setState] = React.useState({
+			num1: 2,
+			num2: 4,
+			response: "",
+			score: 0,
+			incorrect: false,
+		});
+
+		// Update the input field
+		function updateResponse(event) {
+			setState({
+				// Don't change other keys
+				...state,
+				// Response will take the input value
+				response: event.target.value
+			});
+		}
+
+		// Check the answer if user pressed Enter Key
+		function inputKeyPress(event) {
+			if (event.key === "Enter") {
+				// Get input and parse it into Integer
+				const answer = parseInt(state.response)
+				if (state.num1 + state.num2 === answer) {
+					// Right answer
+					setState({
+						...state,
+						// Update score
+						score: state.score + 1,
+						// Update the question values with random numbers 
+						num1: Math.ceil(Math.random() * 10), 
+						num2: Math.ceil(Math.random() * 10), 
+						response: "",
+						incorrect: false,
+					});
+				} else {
+					// Wrong answer
+					setState({
+						...state,
+						score: state.score - 1,
+						response: "",
+						incorrect: true,
+					});
+				}
+			}
+		}
+
+		if (state.score === 10) {
+			return (
+				<div id="winner">
+					You won!
+				</div>
+			);
+		}
+		
+        return (
+			<div>
+				<div className={state.incorrect ? "incorrect" : ""} id="problem">{state.num1} + {state.num2}</div>
+				<input autoFocus={true} onKeyPress={inputKeyPress} onChange={updateResponse} value={state.response}/>
+				<div>Score: {state.score}</div>
+			</div>
+		);
+      }
+
+	//   Up-to-date React.18 root render
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<MyApp />);
+
+    </script>
+  </body>
+</html>
