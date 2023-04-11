@@ -19,6 +19,10 @@ class Flight(models.Model):
 	# The string representation of a model
 	def __str__(self):
 		return f"{self.id}: {self.origin} to {self.destination}"
+	
+	# Test function for valid flight 
+	def is_valid_flight(self):
+		return self.origin != self.destination and self.duration >= 0
 
 
 class Passenger(models.Model):
