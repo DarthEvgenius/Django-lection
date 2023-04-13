@@ -5,6 +5,8 @@ from .models import Flight, Passenger
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from django.shortcuts import get_object_or_404
+
 # Create your views here.
 
 def index(request):
@@ -19,7 +21,9 @@ def flight(request, flight_id):
 	# Need an error check for invalid flight_id
 
 	# Get the flight, "pk" here is for "Primary Key" of the table, for id precisely
-	flight = Flight.objects.get(pk=flight_id)
+	# flight = Flight.objects.get(pk=flight_id)
+	# In tests this method will return 404 if there will be request to invalid id
+	flight = get_object_or_404(Flight, pk=flight_id)
 
 	# Render a template with this flight
 	return render(request, "flights/flight.html", {
